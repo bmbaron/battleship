@@ -1,40 +1,22 @@
+import "./styles.css";
 import { GameboardFactory } from './GameboardFactory';
 import { domHandling } from './domHandling';
+import { gameController } from './gameController';
 
-// const player1Board = GameboardFactory("player 1");
-// player1Board.createShips().then((ships) => {
-//     player1Board.placeShips(ships);
-// });
-// player1Board.displayBoard();
-
-// const player2Board = GameboardFactory("player 2");
-// player2Board.createShips().then((ships2) => {
-//     player2Board.placeShips(ships2);
-// });
-// player2Board.displayBoard();
-
-// if(Object.is(player1Board, player2Board)) {
-//     alert("same");
-// }
 
 const player1Board = GameboardFactory("player 1");
-const ships = player1Board.createShips();
-domHandling.displayBoard(1);
-player1Board.placeShips(ships, 1);
+const ships1 = player1Board.createShips();
+domHandling.displayBoard(1, ships1);
+player1Board.placeShips(ships1, 1);
 
 const player2Board = GameboardFactory("player 2");
 const ships2 = player2Board.createShips();
-domHandling.displayBoard(2);
-player1Board.placeShips(ships2, 2);
+domHandling.displayBoard(2, ships2);
+//player2Board.placeShips(ships2, 2);
+domHandling.displayPrompt();
 
-// const player2Board = GameboardFactory("player 2");
-// const ships2 = player2Board.createShips();
-// player2Board.displayBoard();
-// player2Board.placeShips(ships2);
+//gameController.setShips(ships1, ships2);
+document.getElementById("container1").classList.add("disabled");
 
-// const player2Board = GameboardFactory("player 2");
-// player2Board.createShips().then((ships2) => {
-//     player2Board.placeShips(ships2);
-// });
-// player2Board.displayBoard();
 
+//gameController.runDisplay(ships, ships2);

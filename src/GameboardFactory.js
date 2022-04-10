@@ -48,7 +48,6 @@ function GameboardFactory (name) {
                 });
             }            
             if(redo) {
-                console.log("issue " + pos);
                 i--;
                 continue;
             }   
@@ -57,11 +56,9 @@ function GameboardFactory (name) {
             }
 
             allPos.push("");
-            console.log(i);
             ships[i] = ShipFactory(shipLengths[i], coordinates);
 
         }
-        console.log(allPos);
         return ships;
     };
 
@@ -71,7 +68,7 @@ function GameboardFactory (name) {
             for (const a of document.getElementById("container" + number).querySelectorAll("button")) {
                 const num = Number(a.innerText);
                 if (coords.indexOf(num) !== -1) {
-                    a.style.backgroundColor = "red";
+                    a.style.backgroundColor = "grey";
                 }
             }
         });

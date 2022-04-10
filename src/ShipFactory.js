@@ -12,7 +12,10 @@ function ShipFactory (length, coords) {
     const markHit = (location) => {
         let removeIndex = ship.coordinates.indexOf(location);
         ship.coordinates.splice(removeIndex, 1);
-        return ship.coordinates.length;
+        console.log("hit");
+        if(ship.coordinates.length == 0) {
+            alert("sunk");
+        }
     };
 
     return {
