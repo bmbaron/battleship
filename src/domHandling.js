@@ -20,15 +20,15 @@ const domHandling = (() => {
                 pos[j].style.width = width/5 + "px";
                 pos[j].innerText = j;
                 pos[j].onclick = (e => {
-                    pos[j].style.backgroundColor = "blue";
+                    changeColor("miss", pos[j]);//pos[j].style.backgroundColor = "blue";
                     shipArray.forEach((ship) => {
-                        const coords = ship.getCoords();
+                        let coords = ship.getCoords();
                         coords.forEach((position) => {
                             //console.log(position);
                             if (position == pos[j].innerText) {
-                                pos[j].style.backgroundColor = "red";
-                                pos[j].style.pointerEvents = "none";
+                                changeColor("hit", pos[j]);                                
                                 ship.markHit(position);
+                                gameController.checkIfAllSunk(number);
                             }
                         });
                     });
@@ -37,7 +37,6 @@ const domHandling = (() => {
                 container.appendChild(pos[j]);
             }
         }
-        container.style.margin = "20px";
         mainContainer.appendChild(container);
     };
 
@@ -45,20 +44,40 @@ const domHandling = (() => {
 
     const displayPrompt = (promptText) => {
         if (promptText !== undefined) {
-            promptBox.textContent = promptText;
+            promptBox.innerHTML = promptText;
         }
         else {
-            promptBox.textContent = "Player choose location to attack on opponent's board";
+            promptBox.textContent = "Start game by attacking a position on the computer's board. There are 7 ships!";
             promptBox.classList.add("prompt-box");
             document.body.appendChild(promptBox);
         }
     };
 
-    
+    const changeColor = (event, element, board) => {
+        if (event == "miss") {
+            element.style.backgroundColor = "lightblue";
+            element.style.pointerEvents = "none";
+        }
+        if (event == "hit") {
+            element.style.backgroundColor = "orange";
+            element.style.pointerEvents = "none";
+        }
+        if (event == "sunk") {
+            for (const a of document.getElementById("container" + board).querySelectorAll("button")) {
+                element.forEach((pos) => {
+                    if (a.innerText == pos) {
+                        a.style.backgroundColor = "red";
+                    }
+                });
+            }
+        }
+    };
+
     return { 
         displayBoard, 
-        displayPrompt
-     }
+        displayPrompt,
+        changeColor
+    }
 })();
 
 export { domHandling }

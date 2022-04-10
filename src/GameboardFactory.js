@@ -1,12 +1,14 @@
 import { ShipFactory } from './ShipFactory';
 
 
-function GameboardFactory (name) {
-    const getName  = () => name;
+function GameboardFactory (num) {
+    const getNumber  = () => num;
+
+    const ships = [];
+    const getShips  = () => ships;
 
     const createShips = () => {
         let shipLengths = [5,4,3,2,2,1,1];
-        let ships = [];
         let allPos = [];
         for (let i = 0; i < 7; i++) {
             let coordinates = [];
@@ -56,7 +58,7 @@ function GameboardFactory (name) {
             }
 
             allPos.push("");
-            ships[i] = ShipFactory(shipLengths[i], coordinates);
+            ships[i] = ShipFactory(shipLengths[i], coordinates, getNumber());
 
         }
         return ships;
@@ -68,14 +70,17 @@ function GameboardFactory (name) {
             for (const a of document.getElementById("container" + number).querySelectorAll("button")) {
                 const num = Number(a.innerText);
                 if (coords.indexOf(num) !== -1) {
-                    a.style.backgroundColor = "grey";
+                    if (a.style.backgroundColor != "orange" && a.style.backgroundColor != "red") {
+                        a.style.backgroundColor = "grey";
+                    }
                 }
             }
         });
     };
 
     return {
-        getName,
+        getNumber,
+        getShips,
         createShips,
         placeShips
     }
