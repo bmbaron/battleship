@@ -1,4 +1,5 @@
 import "./styles.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { GameboardFactory } from './GameboardFactory';
 import { domHandling } from './domHandling';
 
@@ -12,7 +13,7 @@ const ships2 = player2Board.createShips();
 domHandling.displayBoard(2, ships2);
 domHandling.displayPrompt();
 
-document.getElementById("container1").classList.add("disabled");
+//document.getElementById("container1").classList.add("disabled");
 console.log(ships2[0].getCoords());
 console.log(ships2[1].getCoords());
 console.log(ships2[2].getCoords());

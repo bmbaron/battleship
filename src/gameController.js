@@ -31,10 +31,10 @@ const gameController = (() => {
 
         if (oldMove == 2) {
             //domHandling.displayPrompt("Computer's move");
-            container2.classList.add("disabled");
+            //container2.classList.add("disabled");
             await new Promise(r => setTimeout(r, 50));
             computerMove();
-            container2.classList.remove("disabled");
+            //container2.classList.remove("disabled");
         }
         // else {
         //     container2.classList.remove("disabled");
@@ -59,8 +59,7 @@ const gameController = (() => {
     };
 
     const checkIfAllSunk = (board) => { 
-        console.log("checked");
-
+        
         const ships1 = player1Board.getShips();
         const ships2 = player2Board.getShips();
         let sunkCount = 0;

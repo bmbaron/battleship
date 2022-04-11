@@ -1,40 +1,94 @@
 .main-container {
-    background-color: green;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin: 5%;
-    /* margin: 10%; */
-    margin-bottom: 5%;
+    display: flex;
 }
 
 .container {
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media only screen and (max-width: 800px) {
+    .main-container {
+        margin: 0;
+        flex-direction: column;
+    }
+    .container {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .container > div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+    }
+    .container > div > .board-container > .btn{
+        font-size: 12px;
+    }
+
+}
+
+.player-label {
+    text-align: center;
+    margin: auto;
+    width: 40vw;
+    height: 45px;
+    line-height: 40px;
+    border: 2px solid #0D6EFD;
+    color: #0D6EFD;
+    font-size: 2vw;
+    border-radius: 5px;
+}
+
+.player-label:hover {
+    background-color:#99e699;
+    cursor: pointer;
+}
+
+.board-container {
+    margin-top: 20px;
     display: grid;
-    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
-    grid-auto-rows: 35px;
-    margin: 20px;
+    grid-template-columns: 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw 3.5vw;
+    grid-auto-rows: 3.5vw;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
 }
 
 .disabled {
     pointer-events: none;
 }
 
-.prompt-box {
+/* .prompt-box {
     text-align: center;
     margin: auto;
     display: block;
     width: 70%;
     height: 20%;
-    border: 2px solid black;
+    border: 2px solid #0D6EFD;
     background-color: lightgrey;
     font-size: 2rem;
-}
+} */
 
-.button {
-    background-color: white;
+.btn {
+    height: 3.5vw;
+    width: 3.5vw;
 }
 
 .button:hover {
-    background-color: lightcoral !important;
+    /* background-color: lightcoral !important; */
     cursor: pointer;
 }
