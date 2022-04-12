@@ -92,3 +92,9 @@
     /* background-color: lightcoral !important; */
     cursor: pointer;
 }
+
+.play-again {
+    background-color:#99e699;
+    transform: scale(1.1);
+    transition: ease 1s all;
+}

@@ -11,7 +11,6 @@ player1Board.placeShips(ships1, 1);
 const player2Board = GameboardFactory(2);
 const ships2 = player2Board.createShips();
 domHandling.displayBoard(2, ships2);
-domHandling.displayPrompt();
 
 //document.getElementById("container1").classList.add("disabled");
 console.log(ships2[0].getCoords());

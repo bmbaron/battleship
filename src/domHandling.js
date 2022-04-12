@@ -1,11 +1,6 @@
 import { gameController } from './gameController';
 
 const domHandling = (() => {
-    
-    let started = false;
-    const startGame = () => {
-        started = true;
-    };
 
     const displayBoard = (number, shipArray) => {
 
@@ -16,11 +11,14 @@ const domHandling = (() => {
 
         let leftContainer = document.createElement("div");
         leftContainer.classList.add("left-container");
+        leftContainer.id = "left-container";
         let rightContainer = document.createElement("div");
         rightContainer.classList.add("right-container");
+        rightContainer.id = "right-container";
 
         let boardContainer = document.createElement("div");
         boardContainer.classList.add("board-container");
+        boardContainer.id = "board-container";
         let pos = [];
 
         let playerLabel = document.createElement("div");
@@ -34,6 +32,7 @@ const domHandling = (() => {
             });
             leftContainer.appendChild(playerLabel);
             leftContainer.appendChild(boardContainer);
+            container.appendChild(leftContainer);
         }
         else {
             playerLabel.innerText = "computer's board (attack any position)";
@@ -41,21 +40,17 @@ const domHandling = (() => {
             playerLabel.classList.add("disabled");
             rightContainer.appendChild(playerLabel);
             rightContainer.appendChild(boardContainer);
+            container.appendChild(rightContainer);
         }
 
 
         for (let i = 1; i <= 100; i = i+10) {
             for (let j = i; j <= i+9; j++) {
                 pos[j] = document.createElement("button");
-                pos[j].classList.add("btn", "btn-outline-primary");
+                pos[j].classList.add("btn", "btn-outline-primary", "rounded-0");
                 pos[j].innerText = j;
+                if (number == 1) { pos[j].id = j };
                 pos[j].onclick = (e => {
-                    if(!started) {
-                        document.getElementById("player").innerText = "your board";
-                        document.getElementById("computer").innerText = "computer's board";
-                        document.getElementById("container1").classList.add("disabled");
-                        startGame();
-                    }
                     changeColor("miss", pos[j]);//pos[j].style.backgroundColor = "blue";
                     shipArray.forEach((ship) => {
                         let coords = ship.getCoords();
@@ -73,22 +68,25 @@ const domHandling = (() => {
                 boardContainer.appendChild(pos[j]);
             }
         }
-        container.appendChild(leftContainer);
-        container.appendChild(rightContainer);
         mainContainer.appendChild(container);
     };
 
-    //const promptBox = document.createElement("div");
-
-    const displayPrompt = (promptText) => {
-        // if (promptText !== undefined) {
-        //     promptBox.innerHTML = promptText;
-        // }
-        // else {
-        //     promptBox.textContent = "Start game by attacking a position on the computer's board. There are 7 ships!";
-        //     promptBox.classList.add("prompt-box");
-        //     document.body.appendChild(promptBox);
-        // }
+    const playerDisplay = () => document.getElementById("player");
+    const computerDisplay =() => document.getElementById("computer");
+    const displayInfo = async (displayDiv, message) => {
+        (displayDiv == "player") ? playerDisplay().innerText = message : computerDisplay().innerText = message;
+        if (message === "play again?") {
+            document.getElementById("board-container").classList.remove("disabled");
+            document.getElementById("container1").classList.remove("disabled");
+            Array.from(document.getElementsByClassName("board-container")).forEach(container => {
+                container.classList.add("disabled");
+            });
+            playerDisplay().classList.remove("disabled");
+            await new Promise(r => setTimeout(r, 1000));
+            playerDisplay().classList.add("play-again");
+            await new Promise(r => setTimeout(r, 1000));
+            playerDisplay().classList.remove("play-again");
+        }
     };
 
     const changeColor = (event, element, board) => {
@@ -105,7 +103,7 @@ const domHandling = (() => {
             for (const a of document.getElementById("container" + board).querySelectorAll("button")) {
                 element.forEach((pos) => {
                     if (a.innerText == pos) {
-                        a.style.backgroundColor = "#660000";
+                        a.style.backgroundColor = "#878787";
                         a.style.color = "white";
                     }
                 });
@@ -115,7 +113,7 @@ const domHandling = (() => {
 
     return { 
         displayBoard, 
-        displayPrompt,
+        displayInfo,
         changeColor
     }
 })();

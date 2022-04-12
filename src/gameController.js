@@ -1,12 +1,14 @@
 import { domHandling } from './domHandling';
-import { player1Board } from './index.js';
-import { player2Board } from './index.js';
+import { player1Board, player2Board } from './index';
+import { findNextHit } from './hitLogic';
+
 
 const gameController = (() => {
 
-    const compMovesArray = [];
-    const AddCompMove = (move) => compMovesArray.push(move);
-    const getCompMoves = () => compMovesArray;
+    let started = false;
+    const startGame = () => {
+        started = true;
+    };
 
     let testNum = 1;
     const setTestNum = () => testNum++;
@@ -14,11 +16,15 @@ const gameController = (() => {
     let gameOver = false;
     const markGameOver = () => gameOver = true;
 
-
-
     const nextMove = async (oldMove) => {
-        const container2 = document.getElementById("container2");
 
+        if(!started) {
+            domHandling.displayInfo("player", "your board");
+            domHandling.displayInfo("computer", "computer's board");
+            //document.getElementById("computer").innerText = "computer's board";
+            document.getElementById("container1").classList.add("disabled");
+            startGame();
+        }
         if (oldMove == 1) {
             let pos = getTestNum();
             for (const position of container2.querySelectorAll("button")) {
@@ -32,7 +38,7 @@ const gameController = (() => {
         if (oldMove == 2) {
             //domHandling.displayPrompt("Computer's move");
             //container2.classList.add("disabled");
-            await new Promise(r => setTimeout(r, 50));
+            await new Promise(r => setTimeout(r, 100));
             computerMove();
             //container2.classList.remove("disabled");
         }
@@ -41,19 +47,40 @@ const gameController = (() => {
         // }
     };
 
+    const compMovesArray = [];
+    const AddCompMove = (move) => compMovesArray.push(move);
+    const getCompMoves = () => compMovesArray;
+
+    let lastMove = 1;
+    const setLastMove = (move) => lastMove = move;
+
     const computerMove = () => { 
         if (!gameOver) {
             let pos = Math.floor(Math.random() * 99) + 2;
-            if(getCompMoves().includes(pos) !== true) {
-                for (const position of container1.querySelectorAll("button")) {
-                    if (position.innerText == pos) {
-                        position.click();
-                        AddCompMove(pos);
-                    }
-                };
+
+            if(document.getElementById(lastMove).style.backgroundColor == "rgb(251, 86, 86)") {
+                pos = findNextHit(lastMove, getCompMoves());
             }
-            else {
-                computerMove();
+            console.log(pos);
+            // if(findNextHit() != 0) {
+
+            // }
+            if(true) {
+                if(getCompMoves().includes(pos) !== true) {
+                    for (const position of container1.querySelectorAll("button")) {
+                        if (position.innerText == pos) {
+                            position.click();
+                            AddCompMove(pos);
+                            setLastMove(pos);
+                            //console.log(pos, findNextHit(pos));
+
+                        }
+                    };
+                }
+                else {
+                    setLastMove(1);
+                    computerMove();
+                }
             }
         }
     };
@@ -80,30 +107,31 @@ const gameController = (() => {
                 if (ship.ship.sunk) {
                     sunkCount++;
                     if (sunkCount == 7) {
-                        endGame("Player wins!");
+                        endGame("You win!");
                     }
                     else {
                         let shipsLeft = 7 - sunkCount;
-                        domHandling.displayPrompt("Sunk! Only " + shipsLeft + " more to go!");
+                        domHandling.displayInfo("computer", "Sunk! Only " + shipsLeft + " more to go!");
                     }
                 }
             });
             if (sunkCount == 0) {
-                domHandling.displayPrompt("Good luck, battleship!");
+                domHandling.displayInfo("player", "Good luck, battleship!");
             }
         }
     };
 
-    const endGame = (message) => { 
+    const endGame = async (message) => { 
         markGameOver();
-        document.getElementById("main-container").style.pointerEvents = "none";
-        domHandling.displayPrompt(message);
+        domHandling.displayInfo("computer", message);
+        await new Promise(r => setTimeout(r, 2000));
+        domHandling.displayInfo("player", "play again?");
     };
 
     return {
         nextMove,
         computerMove,
-        checkIfAllSunk
+        checkIfAllSunk,
     }
 })();
 
