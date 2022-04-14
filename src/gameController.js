@@ -10,9 +10,6 @@ const gameController = (() => {
         started = true;
     };
 
-    let testNum = 1;
-    const setTestNum = () => testNum++;
-    const getTestNum = () => testNum;
     let gameOver = false;
     const markGameOver = () => gameOver = true;
 
@@ -21,30 +18,26 @@ const gameController = (() => {
         if(!started) {
             domHandling.displayInfo("player", "your board");
             domHandling.displayInfo("computer", "computer's board");
-            //document.getElementById("computer").innerText = "computer's board";
             document.getElementById("container1").classList.add("disabled");
             startGame();
         }
-        if (oldMove == 1) {
-            let pos = getTestNum();
-            for (const position of container2.querySelectorAll("button")) {
-                if (position.innerText == pos && pos < 99) {
-                    position.click();
-                }
-            };
-            setTestNum();
-        }
+        // let testNum = 1;
+        // const setTestNum = () => testNum++;
+        // const getTestNum = () => testNum;
+        //if (oldMove == 1) {
+            // let pos = getTestNum();
+            // for (const position of container2.querySelectorAll("button")) {
+            //     if (position.innerText == pos && pos < 99) {
+            //         position.click();
+            //     }
+            // };
+            // setTestNum();
+        //}
 
         if (oldMove == 2) {
-            //domHandling.displayPrompt("Computer's move");
-            //container2.classList.add("disabled");
-            await new Promise(r => setTimeout(r, 100));
+            await new Promise(r => setTimeout(r, 200));
             computerMove();
-            //container2.classList.remove("disabled");
         }
-        // else {
-        //     container2.classList.remove("disabled");
-        // }
     };
 
     const compMovesArray = [];
@@ -61,10 +54,6 @@ const gameController = (() => {
             if(document.getElementById(lastMove).style.backgroundColor == "rgb(251, 86, 86)") {
                 pos = findNextHit(lastMove, getCompMoves());
             }
-            console.log(pos);
-            // if(findNextHit() != 0) {
-
-            // }
             if(true) {
                 if(getCompMoves().includes(pos) !== true) {
                     for (const position of container1.querySelectorAll("button")) {
@@ -72,8 +61,6 @@ const gameController = (() => {
                             position.click();
                             AddCompMove(pos);
                             setLastMove(pos);
-                            //console.log(pos, findNextHit(pos));
-
                         }
                     };
                 }
