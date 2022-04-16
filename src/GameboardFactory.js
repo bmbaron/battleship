@@ -70,10 +70,8 @@ function GameboardFactory (num) {
             for (const a of document.getElementById("container" + number).querySelectorAll("button")) {
                 const num = Number(a.innerText);
                 if (coords.indexOf(num) !== -1) {
-                    if (a.style.backgroundColor != "orange" && a.style.backgroundColor != "black") {
                         a.style.backgroundColor = "#99e699";
                         a.style.color = "black";
-                    }
                 }
             }
         });

@@ -1,9 +1,23 @@
-.main-container {
-    margin: 5%;
-    display: flex;
+.title-container {
+    color: white;
+    background-color: #0D6EFD;
+    width: 215px;
+    height: 4rem;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
-.container {
+.title-container > h1 {
+    line-height: 4rem;
+    text-align: center;
+}
+
+.main-container {
+    margin: 5%;
+    margin-top: 4%;
+    display: flex;
 }
 
 .right-container {
@@ -17,13 +31,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;    
 }
 
 .player-label {
     text-align: center;
     margin: auto;
-    width: 40vw;
+    width: 35vw;
     height: 45px;
     line-height: 40px;
     border: 2px solid #0D6EFD;
@@ -79,9 +93,19 @@
 }
 
 @media only screen and (max-width: 1000px) {
+    .title-container {
+        height: 3rem;
+        width: 175px;
+        margin-bottom: 1rem;
+    }
+    .title-container > h1 {
+        line-height: 3rem;
+        font-size: 2rem;
+    }
     .main-container {
         margin: 0;
         flex-direction: column;
+        margin-bottom: 2rem;
     }
     .container {
         margin: auto;
@@ -112,7 +136,7 @@
         margin-top: 1rem;
         height: 50px;
         line-height: 50px;
-        width: 60vw;
+        width: 55vw;
         font-size: 3vw;
     }
 }
